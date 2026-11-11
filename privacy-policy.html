@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de Privacidad — StashLink</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5a5a5a;
+    --accent: #7c5cff;
+    --card: #f6f5fb;
+    --border: #e4e2f0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15131f;
+      --fg: #f0eef9;
+      --muted: #b4afc9;
+      --accent: #a78bff;
+      --card: #1e1b2c;
+      --border: #332f47;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  h1 {
+    font-size: 1.7rem;
+    margin-bottom: 4px;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 36px;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+  p, li {
+    font-size: 1rem;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  a {
+    color: var(--accent);
+  }
+  code {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.9em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Política de Privacidad de StashLink</h1>
+  <p class="updated">Última actualización: 11 de noviembre de 2026</p>
+
+  <p>
+    StashLink es una aplicación para Android que te permite guardar enlaces de videos y
+    publicaciones (Instagram, TikTok, Facebook, YouTube, X, Reddit, y otros), organizarlos con
+    etiquetas, marcarlos como favoritos y abrirlos directamente en su app de origen. Esta página
+    explica, en detalle y sin relleno genérico, qué datos recolecta la app, para qué los usa y con
+    quién los comparte.
+  </p>
+
+  <h2>1. Para usar la app hace falta una cuenta</h2>
+  <p>
+    StashLink exige iniciar sesión desde el primer uso — no hay modo invitado ni cuentas anónimas.
+    Podés elegir entre dos formas de loguearte:
+  </p>
+  <ul>
+    <li><strong>Google</strong> (a través de Firebase Authentication): recolectamos el email y el
+      nombre asociados a tu cuenta de Google. <strong>Nunca accedemos a tu foto de perfil.</strong></li>
+    <li><strong>Email y contraseña</strong>: recolectamos el email que ingreses. La contraseña la
+      gestiona Firebase Authentication directamente — StashLink nunca la ve ni la almacena.</li>
+  </ul>
+  <p>
+    En ambos casos, Firebase también asigna un identificador interno único a tu cuenta (un
+    <code>uid</code>), que usamos para separar tus datos de los de cualquier otro usuario.
+  </p>
+
+  <h2>2. Qué guardás vos en la app</h2>
+  <p>Por cada enlace que guardás, StashLink almacena:</p>
+  <ul>
+    <li>La URL del enlace</li>
+    <li>Un título y una descripción, si los escribís (son opcionales)</li>
+    <li>Las etiquetas que le asignes</li>
+    <li>Si lo marcaste como favorito y en qué orden de prioridad lo pusiste</li>
+    <li>Fecha de creación y de última edición</li>
+  </ul>
+  <p>
+    La plataforma de origen (Instagram, TikTok, etc.) se detecta automáticamente a partir del
+    dominio de la URL — no es algo que tengas que tipear ni que nosotros inferimos de otra forma.
+  </p>
+
+  <h2>3. Dónde vive esa información</h2>
+  <div class="card">
+    <p><strong>Local, en tu dispositivo (siempre):</strong> tus enlaces y etiquetas se guardan
+      primero en una base de datos local (Room/SQLite). La app funciona sin conexión a internet
+      usando esos datos. Tu preferencia de tema visual (claro/oscuro) se guarda <em>solo</em>
+      localmente y nunca se sincroniza a ningún servidor.</p>
+    <p><strong>En la nube, para sincronizar entre tus dispositivos:</strong> esos mismos datos se
+      sincronizan a Cloud Firestore (de Google), bajo una ruta exclusiva de tu cuenta
+      (<code>users/&lt;tu-uid&gt;/links</code> y <code>users/&lt;tu-uid&gt;/tags</code>). Reglas de
+      seguridad del lado del servidor impiden que cualquier otra cuenta, incluida la nuestra, pueda
+      leer o escribir tus datos: solo vos, autenticado, podés acceder a ellos.</p>
+  </div>
+  <p>
+    Nota sobre el backup del propio Android: si tenés activado el backup automático de tu cuenta de
+    Google en el dispositivo, es posible que esa copia de seguridad del sistema operativo incluya
+    los datos locales de la app. Eso es un mecanismo de Android, no un canal propio de StashLink, y
+    no nos da acceso a esa información.
+  </p>
+
+  <h2>4. Con quién compartimos datos</h2>
+  <p>
+    No vendemos tus datos. No tenemos publicidad ni analítica de comportamiento de ningún tipo (no
+    usamos Google Analytics, ni Facebook Pixel, ni Mixpanel, ni Amplitude, ni ningún SDK
+    publicitario). Los únicos terceros que procesan datos son proveedores de infraestructura que
+    hacen que la app funcione:
+  </p>
+  <table>
+    <tr><th>Servicio</th><th>Para qué lo usamos</th></tr>
+    <tr><td>Firebase Authentication (Google)</td><td>Gestionar tu login (Google o email/contraseña)</td></tr>
+    <tr><td>Cloud Firestore (Google)</td><td>Sincronizar tus enlaces y etiquetas entre tus dispositivos</td></tr>
+    <tr><td>Firebase Crashlytics (Google)</td><td>Reportes técnicos si la app se cierra inesperadamente</td></tr>
+    <tr><td>Sentry</td><td>Diagnóstico técnico puntual de fallas en el inicio de sesión con Google (código de error y número de intento — sin tu email ni tu nombre)</td></tr>
+  </table>
+
+  <h2>5. Permisos del dispositivo</h2>
+  <p>
+    StashLink pide un único permiso: <strong>acceso a internet</strong> (para sincronizar y para
+    abrir enlaces). No pedimos acceso a tu ubicación, contactos, cámara, micrófono, ni
+    almacenamiento. La app también declara qué apps puede "ver" en tu dispositivo
+    (Instagram, TikTok, Facebook, YouTube, X y Reddit) — esto es exclusivamente para poder abrir un
+    enlace guardado directamente en su app correspondiente; StashLink nunca lee ni accede a datos
+    de esas apps.
+  </p>
+
+  <h2>6. Cómo borrar tus datos</h2>
+  <p>
+    Desde <strong>Configuración → Borrar mi cuenta</strong>, dentro de la app, podés borrar tu
+    cuenta por completo en cualquier momento: esto elimina todos tus enlaces y etiquetas de la
+    nube, tu cuenta de inicio de sesión, y los datos guardados localmente en el dispositivo. Es
+    inmediato y no se puede deshacer.
+  </p>
+  <p>
+    Si preferís pedirnos el borrado por otro medio, o tenés cualquier otra consulta sobre tus
+    datos, escribinos a <a href="mailto:stash.link.support@gmail.com">stash.link.support@gmail.com</a>.
+  </p>
+
+  <h2>7. Menores de edad</h2>
+  <p>
+    StashLink no está dirigida a menores de 13 años y no recolectamos conscientemente datos de
+    niños. Si creés que un menor nos proporcionó datos personales, escribinos y lo eliminaremos.
+  </p>
+
+  <h2>8. Cambios a esta política</h2>
+  <p>
+    Si actualizamos esta política, publicaremos la nueva versión en esta misma página con la fecha
+    de actualización al tope. El uso continuado de la app después de un cambio implica que lo
+    aceptás.
+  </p>
+
+  <h2>9. Contacto</h2>
+  <p>
+    Para cualquier pregunta sobre esta política o sobre tus datos:
+    <a href="mailto:stash.link.support@gmail.com">stash.link.support@gmail.com</a>
+  </p>
+
+  <footer>
+    StashLink — esta página describe el comportamiento real de la app tal como está implementada,
+    no un texto genérico de plantilla.
+  </footer>
+</main>
+</body>
+</html>
